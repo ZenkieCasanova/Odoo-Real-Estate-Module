@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="rule_view_base_on_company" model="ir.rule">
+        <field name="name">Estate: View only properties of user company</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="domain_force">[('company_id','in', user.company_ids.mapped('id'))]</field>
+        <field name="perm_read" eval="True"/>
+    </record>
+    <record id="rule_user_see_invoice_base_on_saleperson" model="ir.rule">
+        <field name="name">Invoice: see invoice base on saleperson</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="groups" eval="[(4, ref('estate.estate_group_user'))]"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+    <record id="rule_manager_see_invoice_base_on_saleperson" model="ir.rule">
+        <field name="name">Invoice: see invoice manager</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="groups" eval="[(4, ref('estate.estate_group_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+</odoo>
